@@ -65,25 +65,15 @@ function updateSanityCheck() {
     requiredCheck += v.blockMod;
   }
   
-  // Update both displays
   const sanityEl = document.getElementById('sanityValue');
-  const requiredSpan = document.getElementById('requiredCheck');
-  const checkValueEl = document.getElementById('sanityCheckValue');
-  
   sanityEl.textContent = requiredCheck + '+';
-  requiredSpan.textContent = requiredCheck;
-  checkValueEl.textContent = requiredCheck;
   
   // Color code based on difficulty
   sanityEl.className = 'sanity-value';
   if (requiredCheck >= 10) {
     sanityEl.classList.add('high');
-    checkValueEl.style.color = '#ff4444';
   } else if (requiredCheck >= 7) {
     sanityEl.classList.add('medium');
-    checkValueEl.style.color = '#ffaa44';
-  } else {
-    checkValueEl.style.color = '#fff';
   }
 }
 
@@ -180,7 +170,7 @@ function resolveHit() {
 function nextTurn() {
   currentTurn = currentTurn === 1 ? 2 : 1;
   document.getElementById('result').innerHTML =
-    '<span class="result-placeholder">— Set attack &amp; defense, then press HIT —</span>';
+    '<span class="result-placeholder">— Set attack & defense, then press HIT —</span>';
   updateHP();
   updateSanityCheck();
 }
@@ -191,7 +181,7 @@ function resetGame() {
   currentTurn = 1;
   document.getElementById('winOverlay').style.display = 'none';
   document.getElementById('result').innerHTML =
-    '<span class="result-placeholder">— Set attack &amp; defense, then press HIT —</span>';
+    '<span class="result-placeholder">— Set attack & defense, then press HIT —</span>';
   document.getElementById('diceResult').textContent = '—';
   document.getElementById('cardPool').value = 0;
   document.getElementById('speed').value = 4;
