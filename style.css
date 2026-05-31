@@ -173,7 +173,8 @@ body {
   background: #181818;
   border: 1px solid #2a2a2a;
   border-radius: 14px;
-  padding: 10px 12px;
+  padding: 8px 10px;
+  overflow: hidden; /* Add this line */
 }
 
 .panel-title {
@@ -189,13 +190,13 @@ body {
 .row-inputs {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 6px;
+  gap: 4px;
 }
 
 .field-group {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
 }
 
 .field-label {
@@ -218,8 +219,8 @@ body {
   border: 1px solid #333;
   color: #fff;
   border-radius: 8px;
-  padding: 10px;
-  font-size: 16px;
+  padding: 6px 8px;
+  font-size: 14px;
   text-align: center;
   font-family: 'Barlow', sans-serif;
 }
@@ -236,12 +237,12 @@ body {
   color: #fff;
   font-size: 16px;
   font-weight: 700;
-  padding: 6px 12px;
-  border-radius: 8px;
+  padding: 4px 8px;
+  border-radius: 6px;
   cursor: pointer;
   transition: all 0.1s;
   font-family: 'Rajdhani', sans-serif;
-  min-width: 40px;
+  min-width: 32px;
 }
 
 .num-btn-vertical:active {
@@ -503,8 +504,8 @@ input[type="number"]::-webkit-outer-spin-button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 8px;
+  gap: 4px;
+  padding: 6px;
   background: #1a1a1a;
   border: 2px solid #333;
   border-radius: 16px;
