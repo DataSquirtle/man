@@ -93,6 +93,10 @@
           <button class="num-btn" onclick="adjustDamage(1)">+</button>
         </div>
       </div>
+      <div class="throw-row">
+        <input type="checkbox" id="throw" onchange="updateActionButtons()">
+        <label for="throw">💫 Throw (Attacking Side)</label>
+      </div>
     </div>
 
     <div class="panel">
@@ -116,8 +120,8 @@
         </div>
       </div>
       <div class="no-block-row">
-        <input type="checkbox" id="noBlock" onchange="updateSanityCheck()">
-        <label for="noBlock">No Block</label>
+        <input type="checkbox" id="noBlock" onchange="updateSanityCheck(); updateActionButtons();">
+        <label for="noBlock">🚫 No Block</label>
       </div>
     </div>
   </div>
@@ -128,7 +132,7 @@
   </div>
 
   <!-- ACTION BUTTONS -->
-  <div class="action-bar">
+  <div class="action-bar" id="actionBar">
     <button class="action-btn btn-block" onclick="resolveBlock()">Block</button>
     <button class="action-btn btn-half" onclick="resolveHalf()">Half</button>
     <button class="action-btn btn-hit" onclick="resolveHit()">Hit</button>
