@@ -50,15 +50,15 @@
   <!-- CARD POOL & SANITY CHECK -->
   <div class="sanity-section">
     <div class="card-pool-group">
-      <div class="field-label">Cards in Pool</div>
-      <div class="number-control-vertical">
-        <input type="number" id="cardPool" value="0" min="0" max="10" onchange="updateSanityCheck()">
-        <div class="vertical-buttons">
-          <button class="num-btn-vertical" onclick="adjustCardPool(1)">+</button>
-          <button class="num-btn-vertical" onclick="adjustCardPool(-1)">−</button>
-        </div>
-      </div>
+  <div class="field-label">Cards in Pool</div>
+  <div class="number-control-vertical">
+    <input type="number" id="cardPool" value="0" min="0" max="10" onchange="updateSanityCheck()">
+    <div class="vertical-buttons">
+      <button class="num-btn-vertical" onclick="adjustCardPool(1)">+</button>
+      <button class="num-btn-vertical" onclick="adjustCardPool(-1)">−</button>
     </div>
+  </div>
+</div>
     <div class="sanity-card" id="sanityCard">
       <div class="sanity-label">CHECK REQUIRED</div>
       <div class="sanity-value" id="sanityValue">0+</div>
@@ -90,26 +90,26 @@
           <input type="hidden" id="attackZone" value="High">
         </div>
       </div>
-      <div class="field-group" style="margin-top:8px;">
-        <div class="field-label">Speed</div>
-        <div class="number-control-vertical">
-          <input type="number" id="speed" value="4" min="0" onchange="updateSanityCheck()">
-          <div class="vertical-buttons">
-            <button class="num-btn-vertical" onclick="adjustSpeed(1)">+</button>
-            <button class="num-btn-vertical" onclick="adjustSpeed(-1)">−</button>
-          </div>
-        </div>
-      </div>
-      <div class="field-group" style="margin-top:8px;">
-        <div class="field-label">Damage</div>
-        <div class="number-control-vertical">
-          <input type="number" id="damage" value="4" min="0">
-          <div class="vertical-buttons">
-            <button class="num-btn-vertical" onclick="adjustDamage(1)">+</button>
-            <button class="num-btn-vertical" onclick="adjustDamage(-1)">−</button>
-          </div>
-        </div>
-      </div>
+<div class="field-group" style="margin-top:8px;">
+  <div class="field-label">Speed</div>
+  <div class="number-control-vertical">
+    <input type="number" id="speed" value="4" min="0" onchange="updateSanityCheck()">
+    <div class="vertical-buttons">
+      <button class="num-btn-vertical" onclick="adjustSpeed(1)">+</button>
+      <button class="num-btn-vertical" onclick="adjustSpeed(-1)">−</button>
+    </div>
+  </div>
+</div>
+<div class="field-group" style="margin-top:8px;">
+  <div class="field-label">Damage</div>
+  <div class="number-control-vertical">
+    <input type="number" id="damage" value="4" min="0">
+    <div class="vertical-buttons">
+      <button class="num-btn-vertical" onclick="adjustDamage(1)">+</button>
+      <button class="num-btn-vertical" onclick="adjustDamage(-1)">−</button>
+    </div>
+  </div>
+</div>
       <div class="throw-row">
         <input type="checkbox" id="throw" onchange="updateSanityCheck()">
         <label for="throw">💫 Throw (Attacking Side)</label>
@@ -139,16 +139,16 @@
           <input type="hidden" id="blockZone" value="High">
         </div>
       </div>
-      <div class="field-group" style="margin-top:8px;">
-        <div class="field-label">Block Mod</div>
-        <div class="number-control-vertical">
-          <input type="number" id="blockMod" value="0" onchange="updateSanityCheck()">
-          <div class="vertical-buttons">
-            <button class="num-btn-vertical" onclick="adjustBlockMod(1)">+</button>
-            <button class="num-btn-vertical" onclick="adjustBlockMod(-1)">−</button>
-          </div>
-        </div>
-      </div>
+<div class="field-group" style="margin-top:8px;">
+  <div class="field-label">Block Mod</div>
+  <div class="number-control-vertical">
+    <input type="number" id="blockMod" value="0" onchange="updateSanityCheck()">
+    <div class="vertical-buttons">
+      <button class="num-btn-vertical" onclick="adjustBlockMod(1)">+</button>
+      <button class="num-btn-vertical" onclick="adjustBlockMod(-1)">−</button>
+    </div>
+  </div>
+</div>
       <div class="no-block-row">
         <input type="checkbox" id="noBlock" onchange="updateSanityCheck()">
         <label for="noBlock">🚫 No Block</label>
