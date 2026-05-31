@@ -755,3 +755,30 @@ body {
 }
 
 .win-btn:active { filter: brightness(1.2); }
+
+/* Add to existing style.css */
+
+.throw-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: #ffaa44;
+  cursor: pointer;
+  padding: 6px;
+  background: rgba(255, 170, 68, 0.1);
+  border-radius: 8px;
+}
+
+.throw-row input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #ffaa44;
+  cursor: pointer;
+}
+
+.throw-row label {
+  color: #ffaa44;
+  font-weight: 600;
+}
