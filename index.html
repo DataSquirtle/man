@@ -71,9 +71,9 @@
         <div class="field-group">
           <div class="field-label">Zone</div>
           <select id="attackZone" onchange="updateZoneColors()">
-            <option value="High" style="color:#ff4444;">High</option>
-            <option value="Mid" style="color:#ff8844;">Mid</option>
-            <option value="Low" style="color:#ffdd44;">Low</option>
+            <option value="High">High</option>
+            <option value="Mid">Mid</option>
+            <option value="Low">Low</option>
           </select>
         </div>
         <div class="field-group">
@@ -105,9 +105,9 @@
         <div class="field-group">
           <div class="field-label">Block Zone</div>
           <select id="blockZone" onchange="updateZoneColors()">
-            <option value="High" style="color:#ff4444;">High</option>
-            <option value="Mid" style="color:#ff8844;">Mid</option>
-            <option value="Low" style="color:#ffdd44;">Low</option>
+            <option value="High">High</option>
+            <option value="Mid">Mid</option>
+            <option value="Low">Low</option>
           </select>
         </div>
         <div class="field-group">
@@ -126,16 +126,9 @@
     </div>
   </div>
 
-  <!-- SANITY CHECK DISPLAY (Additional isolated card) -->
-  <div class="check-card" id="checkCard">
-    <div class="check-label">🎲 SANITY CHECK</div>
-    <div class="check-value" id="sanityCheckValue">0</div>
-    <div class="check-required">Required: <span id="requiredCheck">0</span>+</div>
-  </div>
-
   <!-- RESULT -->
   <div class="result-panel" id="result">
-    <span class="result-placeholder">— Set attack &amp; defense, then press HIT —</span>
+    <span class="result-placeholder">— Set attack & defense, then press HIT —</span>
   </div>
 
   <!-- SINGLE ACTION BUTTON -->
