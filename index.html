@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>UVS Combat Calc - Enhanced</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#111111">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Barlow:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-root" id="app">
+
+  <div class="top-title">UVS Combat Calc</div>
+  <div class="turn-banner" id="turnBanner">Player 1 Attacks</div>
+
+  <!-- HP TRACKERS -->
+  <div class="players-row">
+    <div class="player-panel">
+      <div class="player-label">Player 1</div>
+      <div class="hp-display" id="p1hp">30</div>
+      <div class="hp-buttons">
+        <button class="hp-btn" onclick="changeHP(1,-1)">−</button>
+        <button class="hp-btn plus" onclick="changeHP(1,+1)">+</button>
+      </div>
+    </div>
+
+    <div class="center-col">
+      <button class="center-btn" onclick="nextTurn()" title="End Turn" aria-label="End Turn">⇄</button>
+      <button class="center-btn" onclick="resetGame()" title="Reset Game" aria-label="Reset Game" style="font-size:14px;">↺</button>
+    </div>
+
+    <div class="player-panel">
+      <div class="player-label">Player 2</div>
+      <div class="hp-display" id="p2hp">30</div>
+      <div class="hp-buttons">
+        <button class="hp-btn" onclick="changeHP(2,-1)">−</button>
+        <button class="hp-btn plus" onclick="changeHP(2,+1)">+</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD POOL & SANITY CHECK -->
+  <div class="sanity-section">
+    <div class="card-pool-group">
+      <div class="field-label">Cards in Pool</div>
+      <div class="number-control">
+        <button class="num-btn" onclick="adjustCardPool(-1)">−</button>
+        <input type="number" id="cardPool" value="0" min="0" max="10" onchange="updateSanityCheck()">
+        <button class="num-btn" onclick="adjustCardPool(1)">+</button>
+      </div>
+    </div>
+    <div class="sanity-card" id="sanityCard">
+      <div class="sanity-label">CHECK REQUIRED</div>
+      <div class="sanity-value" id="sanityValue">0+</div>
+    </div>
+  </div>
+
+  <!-- ATTACK & DEFENSE -->
+  <div class="combat-section">
+    <div class="panel">
+      <div class="panel-title">Attack</div>
+      <div class="row-inputs">
+        <div class="field-group">
+          <div class="field-label">Zone</div>
+          <select id="attackZone" onchange="updateZoneColors()">
+            <option value="High" style="color:#ff4444;">High</option>
+            <option value="Mid" style="color:#ff8844;">Mid</option>
+            <option value="Low" style="color:#ffdd44;">Low</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <div class="field-label">Speed</div>
+          <div class="number-control">
+            <button class="num-btn" onclick="adjustSpeed(-1)">−</button>
+            <input type="number" id="speed" value="4" min="0" onchange="updateSanityCheck()">
+            <button class="num-btn" onclick="adjustSpeed(1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="field-group" style="margin-top:6px;">
+        <div class="field-label">Damage</div>
+        <div class="number-control">
+          <button class="num-btn" onclick="adjustDamage(-1)">−</button>
+          <input type="number" id="damage" value="4" min="0">
+          <button class="num-btn" onclick="adjustDamage(1)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Defense</div>
+      <div class="row-inputs">
+        <div class="field-group">
+          <div class="field-label">Block Zone</div>
+          <select id="blockZone" onchange="updateZoneColors()">
+            <option value="High" style="color:#ff4444;">High</option>
+            <option value="Mid" style="color:#ff8844;">Mid</option>
+            <option value="Low" style="color:#ffdd44;">Low</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <div class="field-label">Block Mod</div>
+          <div class="number-control">
+            <button class="num-btn" onclick="adjustBlockMod(-1)">−</button>
+            <input type="number" id="blockMod" value="0" onchange="updateSanityCheck()">
+            <button class="num-btn" onclick="adjustBlockMod(1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="no-block-row">
+        <input type="checkbox" id="noBlock" onchange="updateSanityCheck()">
+        <label for="noBlock">No Block</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result-panel" id="result">
+    <span class="result-placeholder">— Set attack &amp; defense, then resolve —</span>
+  </div>
+
+  <!-- ACTION BUTTONS -->
+  <div class="action-bar">
+    <button class="action-btn btn-block" onclick="resolveBlock()">Block</button>
+    <button class="action-btn btn-half" onclick="resolveHalf()">Half</button>
+    <button class="action-btn btn-hit" onclick="resolveHit()">Hit</button>
+  </div>
+
+  <!-- UTILITIES -->
+  <div class="util-row">
+    <button class="util-btn" onclick="rollDice()">🎲 Roll Dice</button>
+    <div class="dice-result" id="diceResult">—</div>
+  </div>
+
+  <!-- WIN OVERLAY -->
+  <div id="winOverlay" class="win-overlay" style="display:none;">
+    <div class="win-text" id="winText">Player 1 Wins!</div>
+    <div class="win-sub">Game Over</div>
+    <button class="win-btn" onclick="resetGame()">Play Again</button>
+  </div>
+
+</div>
+
+<script src="app.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js');
+  }
+</script>
+</body>
+</html>

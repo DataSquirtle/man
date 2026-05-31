@@ -1,0 +1,22 @@
+{
+  "name": "UVS Combat Calc",
+  "short_name": "UVS Calc",
+  "description": "UVS TCG combat calculator and HP tracker",
+  "start_url": "https://datasquirtle.github.io/man/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#111111",
+  "theme_color": "#111111",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
