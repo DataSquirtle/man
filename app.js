@@ -258,3 +258,80 @@ document.getElementById('blockMod').addEventListener('input', updateSanityCheck)
 document.getElementById('cardPool').addEventListener('input', updateSanityCheck);
 document.getElementById('noBlock').addEventListener('change', updateSanityCheck);
 document.getElementById('throw').addEventListener('change', updateSanityCheck);
+
+// Zone selector initialization
+function initZoneSelectors() {
+  // Attack zone selector
+  const attackSelector = document.getElementById('attackZoneSelector');
+  const attackInput = document.getElementById('attackZone');
+  
+  if (attackSelector) {
+    const attackOptions = attackSelector.querySelectorAll('.zone-option');
+    attackOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        const zone = option.dataset.zone;
+        attackInput.value = zone;
+        
+        // Update selected styling
+        attackOptions.forEach(opt => opt.classList.remove('selected'));
+        option.classList.add('selected');
+        
+        updateZoneColors();
+        updateSanityCheck();
+      });
+    });
+  }
+  
+  // Block zone selector
+  const blockSelector = document.getElementById('blockZoneSelector');
+  const blockInput = document.getElementById('blockZone');
+  
+  if (blockSelector) {
+    const blockOptions = blockSelector.querySelectorAll('.zone-option');
+    blockOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        const zone = option.dataset.zone;
+        blockInput.value = zone;
+        
+        // Update selected styling
+        blockOptions.forEach(opt => opt.classList.remove('selected'));
+        option.classList.add('selected');
+        
+        updateZoneColors();
+        updateSanityCheck();
+      });
+    });
+  }
+  
+  // Set initial selected states
+  updateZoneColors();
+}
+
+// Replace the existing updateZoneColors function with this updated version
+function updateZoneColors() {
+  const attackZone = document.getElementById('attackZone').value;
+  const blockZone = document.getElementById('blockZone').value;
+  
+  // Update attack selector visual
+  const attackOptions = document.querySelectorAll('#attackZoneSelector .zone-option');
+  attackOptions.forEach(opt => {
+    if (opt.dataset.zone === attackZone) {
+      opt.classList.add('selected');
+    } else {
+      opt.classList.remove('selected');
+    }
+  });
+  
+  // Update block selector visual
+  const blockOptions = document.querySelectorAll('#blockZoneSelector .zone-option');
+  blockOptions.forEach(opt => {
+    if (opt.dataset.zone === blockZone) {
+      opt.classList.add('selected');
+    } else {
+      opt.classList.remove('selected');
+    }
+  });
+}
+
+// Call init when page loads
+document.addEventListener('DOMContentLoaded', initZoneSelectors);
