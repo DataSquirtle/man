@@ -488,3 +488,276 @@ body {
 }
 
 .win-btn:active { filter: brightness(1.2); }
+
+/* ==================== */
+/* MOBILE RESPONSIVE FIXES */
+/* ==================== */
+
+/* Better number input visibility */
+.number-control input {
+  background: #222;
+  border: 1px solid #333;
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 4px;
+  font-size: 16px;
+  text-align: center;
+  font-family: 'Barlow', sans-serif;
+  min-width: 0;
+  width: 100%;
+}
+
+/* Ensure number inputs show full value */
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Adjust font sizes for mobile */
+@media (max-width: 600px) {
+  .app-root {
+    padding: 8px;
+    gap: 6px;
+  }
+  
+  .hp-display {
+    font-size: 42px;
+  }
+  
+  .hp-btn {
+    font-size: 18px;
+    padding: 4px 0;
+  }
+  
+  .panel {
+    padding: 8px;
+  }
+  
+  .field-group select,
+  .field-group input[type="number"] {
+    padding: 6px;
+    font-size: 14px;
+  }
+  
+  .num-btn {
+    font-size: 18px;
+    padding: 2px 0;
+    min-width: 28px;
+  }
+  
+  .number-control {
+    grid-template-columns: 32px 1fr 32px;
+    gap: 3px;
+  }
+  
+  .sanity-value {
+    font-size: 24px;
+  }
+  
+  .btn-hit-main {
+    padding: 14px 0;
+    font-size: 20px;
+  }
+  
+  .result-panel {
+    font-size: 12px;
+    min-height: 65px;
+    padding: 8px 10px;
+  }
+  
+  .player-label {
+    font-size: 10px;
+  }
+  
+  .turn-banner {
+    font-size: 12px;
+  }
+  
+  .top-title {
+    font-size: 11px;
+  }
+  
+  .center-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+  
+  .util-btn {
+    font-size: 12px;
+    padding: 8px;
+  }
+  
+  .dice-result {
+    font-size: 24px;
+  }
+  
+  .sanity-section {
+    padding: 8px;
+  }
+  
+  .sanity-card {
+    padding: 4px;
+  }
+  
+  .sanity-label {
+    font-size: 8px;
+  }
+}
+
+/* Even smaller phones */
+@media (max-width: 480px) {
+  .players-row {
+    gap: 4px;
+  }
+  
+  .player-panel {
+    padding: 8px;
+  }
+  
+  .hp-display {
+    font-size: 36px;
+  }
+  
+  .hp-buttons {
+    gap: 3px;
+  }
+  
+  .hp-btn {
+    font-size: 16px;
+  }
+  
+  .number-control {
+    grid-template-columns: 28px 1fr 28px;
+  }
+  
+  .num-btn {
+    font-size: 16px;
+    min-width: 28px;
+  }
+  
+  .field-group select,
+  .field-group input[type="number"] {
+    font-size: 13px;
+    padding: 5px;
+  }
+  
+  .btn-hit-main {
+    padding: 12px 0;
+    font-size: 18px;
+  }
+  
+  .combat-section {
+    gap: 6px;
+  }
+  
+  .panel {
+    padding: 6px;
+  }
+  
+  .panel-title {
+    font-size: 10px;
+    margin-bottom: 6px;
+  }
+  
+  .field-label {
+    font-size: 9px;
+  }
+  
+  .throw-row, .no-block-row {
+    margin-top: 6px;
+    font-size: 11px;
+  }
+  
+  .sanity-section {
+    gap: 6px;
+  }
+  
+  .sanity-value {
+    font-size: 20px;
+  }
+}
+
+/* Landscape mode adjustments */
+@media (max-width: 900px) and (orientation: landscape) {
+  .app-root {
+    max-width: 100%;
+    gap: 4px;
+  }
+  
+  .players-row {
+    gap: 8px;
+  }
+  
+  .hp-display {
+    font-size: 32px;
+  }
+  
+  .combat-section {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .sanity-section {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .btn-hit-main {
+    padding: 10px 0;
+    font-size: 18px;
+  }
+}
+
+/* Fix for notch/margin safe areas */
+@supports (padding: max(0px)) {
+  .app-root {
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+    padding-top: max(12px, env(safe-area-inset-top));
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+}
+
+/* Better tap targets for mobile */
+button, 
+.num-btn,
+.hp-btn,
+.center-btn,
+.util-btn,
+.action-btn,
+.win-btn,
+select,
+input[type="checkbox"] {
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+/* Improve readability of result on mobile */
+.result-panel {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.result-panel br {
+  display: block;
+  margin: 2px 0;
+}
+
+/* Better contrast for number inputs */
+.number-control input:focus {
+  outline: none;
+  border-color: #c0282a;
+  background: #2a2a2a;
+}
+
+/* Ensure zone dropdowns are readable on mobile */
+select option {
+  background: #222;
+  color: #fff;
+  padding: 8px;
+}
