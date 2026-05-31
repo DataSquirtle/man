@@ -74,13 +74,20 @@
           <button class="zone-cycle-btn" id="attackCycleBtn">
             <div class="attack-icon" id="attackIcon">
               <svg class="attack-svg" viewBox="0 0 100 100">
-                <!-- Arrow High (Red) -->
-                <polygon class="arrow-high arrow" points="50,15 40,35 46,35 46,55 54,55 54,35 60,35" fill="#555"/>
-                <!-- Arrow Mid (Orange) -->
-                <polygon class="arrow-mid arrow" points="50,50 35,65 43,65 43,85 57,85 57,65 65,65" fill="#555"/>
-                <!-- Arrow Low (Yellow) -->
-                <polygon class="arrow-low arrow" points="50,85 40,65 46,65 46,45 54,45 54,65 60,65" fill="#555"/>
-                <circle class="attack-circle" cx="50" cy="50" r="45" fill="none" stroke="#555" stroke-width="3"/>
+                <!-- Outer circle -->
+                <circle class="attack-circle" cx="50" cy="50" r="42" fill="none" stroke="#555" stroke-width="3"/>
+                
+                <!-- Arrow 1 (steepest angle) - High zone -->
+                <polygon class="arrow-high arrow" points="50,50 38,28 44,32 50,22 56,32 62,28" fill="#555"/>
+                
+                <!-- Arrow 2 (middle angle) - Mid zone -->
+                <polygon class="arrow-mid arrow" points="50,50 30,32 38,36 50,20 62,36 70,32" fill="#555"/>
+                
+                <!-- Arrow 3 (shallowest angle) - Low zone -->
+                <polygon class="arrow-low arrow" points="50,50 28,42 36,44 50,28 64,44 72,42" fill="#555"/>
+                
+                <!-- Center core -->
+                <circle cx="50" cy="50" r="6" fill="#555"/>
               </svg>
             </div>
             <span class="zone-label-text" id="attackZoneText">HIGH</span>
@@ -120,13 +127,16 @@
           <button class="zone-cycle-btn" id="blockCycleBtn">
             <div class="shield-icon" id="shieldIcon">
               <svg class="shield-svg" viewBox="0 0 100 100">
-                <!-- Shield shape -->
+                <!-- Shield base outline -->
                 <path class="shield-base" d="M50,5 L50,5 C50,5 15,15 15,35 C15,65 50,95 50,95 C50,95 85,65 85,35 C85,15 50,5 50,5 Z" fill="none" stroke="#555" stroke-width="3"/>
-                <!-- Top segment (High) -->
+                
+                <!-- Top segment (High block) -->
                 <path class="shield-segment shield-high" d="M50,10 L50,35 L50,35 L22,30 C22,22 50,10 50,10 Z" fill="#555" opacity="0.3"/>
+                
                 <!-- Mid segment -->
                 <path class="shield-segment shield-mid" d="M50,38 L50,60 L50,60 L20,50 C20,40 50,38 50,38 Z" fill="#555" opacity="0.3"/>
-                <!-- Bottom segment (Low) -->
+                
+                <!-- Bottom segment (Low block) -->
                 <path class="shield-segment shield-low" d="M50,65 L50,88 L50,88 C50,88 25,75 25,65 C25,60 30,55 30,55 L50,65 Z" fill="#555" opacity="0.3"/>
               </svg>
             </div>
