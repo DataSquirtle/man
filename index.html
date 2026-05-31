@@ -94,7 +94,7 @@
         </div>
       </div>
       <div class="throw-row">
-        <input type="checkbox" id="throw" onchange="updateActionButtons()">
+        <input type="checkbox" id="throw" onchange="updateSanityCheck()">
         <label for="throw">💫 Throw (Attacking Side)</label>
       </div>
     </div>
@@ -120,22 +120,27 @@
         </div>
       </div>
       <div class="no-block-row">
-        <input type="checkbox" id="noBlock" onchange="updateSanityCheck(); updateActionButtons();">
+        <input type="checkbox" id="noBlock" onchange="updateSanityCheck()">
         <label for="noBlock">🚫 No Block</label>
       </div>
     </div>
   </div>
 
-  <!-- RESULT -->
-  <div class="result-panel" id="result">
-    <span class="result-placeholder">— Set attack &amp; defense, then resolve —</span>
+  <!-- SANITY CHECK DISPLAY (Additional isolated card) -->
+  <div class="check-card" id="checkCard">
+    <div class="check-label">🎲 SANITY CHECK</div>
+    <div class="check-value" id="sanityCheckValue">0</div>
+    <div class="check-required">Required: <span id="requiredCheck">0</span>+</div>
   </div>
 
-  <!-- ACTION BUTTONS -->
-  <div class="action-bar" id="actionBar">
-    <button class="action-btn btn-block" onclick="resolveBlock()">Block</button>
-    <button class="action-btn btn-half" onclick="resolveHalf()">Half</button>
-    <button class="action-btn btn-hit" onclick="resolveHit()">Hit</button>
+  <!-- RESULT -->
+  <div class="result-panel" id="result">
+    <span class="result-placeholder">— Set attack &amp; defense, then press HIT —</span>
+  </div>
+
+  <!-- SINGLE ACTION BUTTON -->
+  <div class="action-bar">
+    <button class="action-btn btn-hit-main" onclick="resolveHit()">⚡ HIT ⚡</button>
   </div>
 
   <!-- UTILITIES -->
