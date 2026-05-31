@@ -63,68 +63,88 @@
     </div>
   </div>
 
-  <!-- ATTACK & DEFENSE -->
-  <div class="combat-section">
-    <div class="panel">
-      <div class="panel-title">Attack</div>
-      <div class="row-inputs">
-        <div class="field-group">
-          <div class="field-label">Zone</div>
-          <select id="attackZone" onchange="updateZoneColors()">
-            <option value="High">High</option>
-            <option value="Mid">Mid</option>
-            <option value="Low">Low</option>
-          </select>
-        </div>
-        <div class="field-group">
-          <div class="field-label">Speed</div>
-          <div class="number-control">
-            <button class="num-btn" onclick="adjustSpeed(-1)">−</button>
-            <input type="number" id="speed" value="4" min="0" onchange="updateSanityCheck()">
-            <button class="num-btn" onclick="adjustSpeed(1)">+</button>
+<!-- ATTACK & DEFENSE -->
+<div class="combat-section">
+  <div class="panel">
+    <div class="panel-title">Attack</div>
+    <div class="row-inputs">
+      <div class="field-group">
+        <div class="field-label">Zone</div>
+        <div class="zone-selector" id="attackZoneSelector">
+          <div class="zone-option zone-high" data-zone="High">
+            <span class="zone-symbol">▲</span>
+            <span class="zone-name">HIGH</span>
+          </div>
+          <div class="zone-option zone-mid" data-zone="Mid">
+            <span class="zone-symbol">◆</span>
+            <span class="zone-name">MID</span>
+          </div>
+          <div class="zone-option zone-low" data-zone="Low">
+            <span class="zone-symbol">▼</span>
+            <span class="zone-name">LOW</span>
           </div>
         </div>
+        <input type="hidden" id="attackZone" value="High">
       </div>
-      <div class="field-group" style="margin-top:6px;">
-        <div class="field-label">Damage</div>
+      <div class="field-group">
+        <div class="field-label">Speed</div>
         <div class="number-control">
-          <button class="num-btn" onclick="adjustDamage(-1)">−</button>
-          <input type="number" id="damage" value="4" min="0">
-          <button class="num-btn" onclick="adjustDamage(1)">+</button>
+          <button class="num-btn" onclick="adjustSpeed(-1)">−</button>
+          <input type="number" id="speed" value="4" min="0" onchange="updateSanityCheck()">
+          <button class="num-btn" onclick="adjustSpeed(1)">+</button>
         </div>
-      </div>
-      <div class="throw-row">
-        <input type="checkbox" id="throw" onchange="updateSanityCheck()">
-        <label for="throw">💫 Throw (Attacking Side)</label>
       </div>
     </div>
-
-    <div class="panel">
-      <div class="panel-title">Defense</div>
-      <div class="row-inputs">
-        <div class="field-group">
-          <div class="field-label">Block Zone</div>
-          <select id="blockZone" onchange="updateZoneColors()">
-            <option value="High">High</option>
-            <option value="Mid">Mid</option>
-            <option value="Low">Low</option>
-          </select>
-        </div>
-        <div class="field-group">
-          <div class="field-label">Block Mod</div>
-          <div class="number-control">
-            <button class="num-btn" onclick="adjustBlockMod(-1)">−</button>
-            <input type="number" id="blockMod" value="0" onchange="updateSanityCheck()">
-            <button class="num-btn" onclick="adjustBlockMod(1)">+</button>
-          </div>
-        </div>
+    <div class="field-group" style="margin-top:6px;">
+      <div class="field-label">Damage</div>
+      <div class="number-control">
+        <button class="num-btn" onclick="adjustDamage(-1)">−</button>
+        <input type="number" id="damage" value="4" min="0">
+        <button class="num-btn" onclick="adjustDamage(1)">+</button>
       </div>
-      <div class="no-block-row">
-        <input type="checkbox" id="noBlock" onchange="updateSanityCheck()">
-        <label for="noBlock">🚫 No Block</label>
-      </div>
+    </div>
+    <div class="throw-row">
+      <input type="checkbox" id="throw" onchange="updateSanityCheck()">
+      <label for="throw">💫 Throw (Attacking Side)</label>
     </div>
   </div>
+
+  <div class="panel">
+    <div class="panel-title">Defense</div>
+    <div class="row-inputs">
+      <div class="field-group">
+        <div class="field-label">Block Zone</div>
+        <div class="zone-selector" id="blockZoneSelector">
+          <div class="zone-option zone-high" data-zone="High">
+            <span class="zone-symbol">▲</span>
+            <span class="zone-name">HIGH</span>
+          </div>
+          <div class="zone-option zone-mid" data-zone="Mid">
+            <span class="zone-symbol">◆</span>
+            <span class="zone-name">MID</span>
+          </div>
+          <div class="zone-option zone-low" data-zone="Low">
+            <span class="zone-symbol">▼</span>
+            <span class="zone-name">LOW</span>
+          </div>
+        </div>
+        <input type="hidden" id="blockZone" value="High">
+      </div>
+      <div class="field-group">
+        <div class="field-label">Block Mod</div>
+        <div class="number-control">
+          <button class="num-btn" onclick="adjustBlockMod(-1)">−</button>
+          <input type="number" id="blockMod" value="0" onchange="updateSanityCheck()">
+          <button class="num-btn" onclick="adjustBlockMod(1)">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="no-block-row">
+      <input type="checkbox" id="noBlock" onchange="updateSanityCheck()">
+      <label for="noBlock">🚫 No Block</label>
+    </div>
+  </div>
+</div>
 
   <!-- RESULT -->
   <div class="result-panel" id="result">
