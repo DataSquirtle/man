@@ -883,3 +883,192 @@ input[type="checkbox"] {
   border-color: #c0282a;
   background: #2a2a2a;
 }
+
+/* ==================== */
+/* THEME TOGGLE */
+/* ==================== */
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.theme-toggle {
+  background: #2a2a2a;
+  border: 1px solid #3a3a3a;
+  color: #fff;
+  font-size: 20px;
+  padding: 6px 12px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+/* Light Mode (Day) */
+body.light-mode {
+  background: #f0f0f0;
+}
+
+body.light-mode .app-root {
+  background: #ffffff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+body.light-mode .top-title {
+  color: #999;
+}
+
+body.light-mode .turn-banner {
+  color: #d4770a;
+}
+
+body.light-mode .player-panel {
+  background: linear-gradient(145deg, #f5e6e6, #ffe0e0);
+  border-color: #cc8888;
+}
+
+body.light-mode .player-label {
+  color: #cc4444;
+}
+
+body.light-mode .hp-display {
+  color: #333;
+}
+
+body.light-mode .hp-btn {
+  background: #ffdddd;
+  border-color: #cc8888;
+  color: #333;
+}
+
+body.light-mode .hp-btn.plus {
+  border-color: #88cc88;
+  background: #ddffdd;
+}
+
+body.light-mode .center-btn {
+  background: #e0e0e0;
+  border-color: #ccc;
+  color: #666;
+}
+
+body.light-mode .panel {
+  background: #f5f5f5;
+  border-color: #ddd;
+}
+
+body.light-mode .panel-title {
+  color: #999;
+}
+
+body.light-mode .field-label {
+  color: #999;
+}
+
+body.light-mode .field-group select,
+body.light-mode .field-group input,
+body.light-mode .number-control-vertical input {
+  background: #fff;
+  border-color: #ddd;
+  color: #333;
+}
+
+body.light-mode .num-btn-vertical {
+  background: #e0e0e0;
+  border-color: #ccc;
+  color: #333;
+}
+
+body.light-mode .num-btn-vertical:active {
+  background: #c0282a;
+  color: #fff;
+}
+
+body.light-mode .sanity-section {
+  background: #f5f5f5;
+  border-color: #ddd;
+}
+
+body.light-mode .sanity-card {
+  background: linear-gradient(135deg, #e8e8f0, #e0e0ea);
+  border-color: #d4770a;
+}
+
+body.light-mode .sanity-label {
+  color: #d4770a;
+}
+
+body.light-mode .result-panel {
+  background: #f5f5f5;
+  border-color: #ddd;
+  color: #666;
+}
+
+body.light-mode .result-placeholder {
+  color: #bbb;
+}
+
+body.light-mode .throw-row {
+  background: rgba(255, 170, 68, 0.15);
+}
+
+body.light-mode .no-block-row {
+  color: #aaa;
+}
+
+body.light-mode .util-btn {
+  background: #e0e0e0;
+  border-color: #ccc;
+  color: #666;
+}
+
+body.light-mode .dice-result {
+  background: #e0e0e0;
+  border-color: #ccc;
+  color: #d4770a;
+}
+
+body.light-mode .zone-cycle-btn {
+  background: #e8e8e8;
+  border-color: #ddd;
+}
+
+body.light-mode .win-overlay {
+  background: rgba(255,255,255,0.95);
+}
+
+body.light-mode .win-text {
+  color: #d4770a;
+}
+
+body.light-mode .win-sub {
+  color: #999;
+}
+
+body.light-mode .theme-toggle {
+  background: #e0e0e0;
+  border-color: #ccc;
+  color: #333;
+}
+
+/* Smooth transition for theme switching */
+body, 
+.app-root,
+.panel,
+.player-panel,
+.hp-btn,
+.num-btn-vertical,
+.sanity-card,
+.result-panel,
+.util-btn,
+.dice-result,
+.zone-cycle-btn {
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
