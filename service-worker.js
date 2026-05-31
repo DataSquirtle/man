@@ -1,4 +1,4 @@
-const CACHE = "man-v1";
+const CACHE = "man-v2";
 const FILES = [
   "/",
   "/index.html",
