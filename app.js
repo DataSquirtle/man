@@ -95,23 +95,23 @@ function applyDamage(dmg) {
 }
 
 function calculateFinalDamage(v) {
-  // No block = full damage (Throw doesn't matter)
+  // No block = full damage
   if (v.noBlock) {
     return v.damage;
   }
   
-  // Only apply Throw if there IS a block attempt
-  if (v.throwAttack) {
-    return Math.ceil(v.damage / 2);
+  // If Throw is checked with a block attempt (same or adjacent)
+  if (v.throwAttack && (v.zoneRelation === 'same' || v.zoneRelation === 'adjacent')) {
+    return Math.ceil(v.damage / 2); // Half damage
   }
   
-  // Normal block rules based on zone (no throw)
+  // Normal block rules (no Throw, or opposite zone with Throw)
   if (v.zoneRelation === 'same') {
     return 0; // Fully blocked
   } else if (v.zoneRelation === 'adjacent') {
     return Math.ceil(v.damage / 2); // Half damage
-  } else {
-    return v.damage; // Opposite zone = full damage
+  } else { // opposite
+    return v.damage; // Full damage
   }
 }
 
@@ -132,10 +132,18 @@ function resolveHit() {
     hitType = 'FULL HIT';
     explanation = 'No block attempted - full damage';
     emoji = '🚫';
-  } else if (v.throwAttack) {
+  } else if (v.throwAttack && v.zoneRelation === 'same') {
     hitType = 'HALF DAMAGE';
-    explanation = 'Throw attack with block present - half damage';
+    explanation = `Throw turned same zone block (${v.attackZone}) into half damage`;
     emoji = '💫';
+  } else if (v.throwAttack && v.zoneRelation === 'adjacent') {
+    hitType = 'HALF DAMAGE';
+    explanation = `Throw attack on adjacent zone (${v.attackZone} → ${v.blockZone}) - half damage`;
+    emoji = '💫';
+  } else if (v.throwAttack && v.zoneRelation === 'opposite') {
+    hitType = 'FULL HIT';
+    explanation = `Opposite zone (${v.attackZone} → ${v.blockZone}) - full damage (Throw already full)`;
+    emoji = '⚡';
   } else if (v.zoneRelation === 'same') {
     hitType = 'BLOCKED';
     explanation = `Same zone (${v.attackZone}) - fully blocked`;
@@ -166,7 +174,6 @@ function resolveHit() {
       `<span style="font-size:12px;">→ 0 damage dealt</span>`;
   }
 }
-
 function nextTurn() {
   currentTurn = currentTurn === 1 ? 2 : 1;
   document.getElementById('result').innerHTML =
