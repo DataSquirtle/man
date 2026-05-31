@@ -335,3 +335,97 @@ function updateZoneColors() {
 
 // Call init when page loads
 document.addEventListener('DOMContentLoaded', initZoneSelectors);
+
+// Zone cycling functionality
+const zoneOrder = ['High', 'Mid', 'Low'];
+
+function setupZoneCycling() {
+  // Attack zone cycling
+  const attackBtn = document.getElementById('attackCycleBtn');
+  const attackInput = document.getElementById('attackZone');
+  const attackIcon = document.getElementById('attackIcon');
+  const attackText = document.getElementById('attackZoneText');
+  
+  if (attackBtn) {
+    attackBtn.addEventListener('click', () => {
+      let currentZone = attackInput.value;
+      let currentIndex = zoneOrder.indexOf(currentZone);
+      let nextIndex = (currentIndex + 1) % zoneOrder.length;
+      let nextZone = zoneOrder[nextIndex];
+      
+      attackInput.value = nextZone;
+      attackBtn.setAttribute('data-zone', nextZone);
+      attackIcon.setAttribute('data-zone', nextZone);
+      attackText.textContent = nextZone;
+      
+      updateZoneColors();
+      updateSanityCheck();
+    });
+  }
+  
+  // Block zone cycling
+  const blockBtn = document.getElementById('blockCycleBtn');
+  const blockInput = document.getElementById('blockZone');
+  const shieldIcon = document.getElementById('shieldIcon');
+  const blockText = document.getElementById('blockZoneText');
+  
+  if (blockBtn) {
+    blockBtn.addEventListener('click', () => {
+      let currentZone = blockInput.value;
+      let currentIndex = zoneOrder.indexOf(currentZone);
+      let nextIndex = (currentIndex + 1) % zoneOrder.length;
+      let nextZone = zoneOrder[nextIndex];
+      
+      blockInput.value = nextZone;
+      blockBtn.setAttribute('data-zone', nextZone);
+      shieldIcon.setAttribute('data-zone', nextZone);
+      blockText.textContent = nextZone;
+      
+      updateZoneColors();
+      updateSanityCheck();
+    });
+  }
+  
+  // Set initial data attributes
+  if (attackBtn) {
+    attackBtn.setAttribute('data-zone', attackInput.value);
+    attackIcon.setAttribute('data-zone', attackInput.value);
+  }
+  if (blockBtn) {
+    blockBtn.setAttribute('data-zone', blockInput.value);
+    shieldIcon.setAttribute('data-zone', blockInput.value);
+  }
+}
+
+// Update the updateZoneColors function for the new cycle interface
+function updateZoneColors() {
+  const attackZone = document.getElementById('attackZone').value;
+  const blockZone = document.getElementById('blockZone').value;
+  
+  // Update attack button
+  const attackBtn = document.getElementById('attackCycleBtn');
+  const attackIcon = document.getElementById('attackIcon');
+  const attackText = document.getElementById('attackZoneText');
+  if (attackBtn) {
+    attackBtn.setAttribute('data-zone', attackZone);
+    attackIcon.setAttribute('data-zone', attackZone);
+    attackText.textContent = attackZone;
+  }
+  
+  // Update block button
+  const blockBtn = document.getElementById('blockCycleBtn');
+  const shieldIcon = document.getElementById('shieldIcon');
+  const blockText = document.getElementById('blockZoneText');
+  if (blockBtn) {
+    blockBtn.setAttribute('data-zone', blockZone);
+    shieldIcon.setAttribute('data-zone', blockZone);
+    blockText.textContent = blockZone;
+  }
+}
+
+// Call setupZoneCycling in your initialization
+// Add this line where you initialize other functions:
+document.addEventListener('DOMContentLoaded', () => {
+  setupZoneCycling();
+  initZoneSelectors(); // If you still have this, otherwise remove it
+});
