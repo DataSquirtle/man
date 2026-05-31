@@ -95,17 +95,17 @@ function applyDamage(dmg) {
 }
 
 function calculateFinalDamage(v) {
-  // Throw overrides everything - always half damage (rounded up)
-  if (v.throwAttack) {
-    return Math.ceil(v.damage / 2);
-  }
-  
-  // No block = full damage
+  // No block = full damage (Throw doesn't matter)
   if (v.noBlock) {
     return v.damage;
   }
   
-  // Normal block rules based on zone
+  // Only apply Throw if there IS a block attempt
+  if (v.throwAttack) {
+    return Math.ceil(v.damage / 2);
+  }
+  
+  // Normal block rules based on zone (no throw)
   if (v.zoneRelation === 'same') {
     return 0; // Fully blocked
   } else if (v.zoneRelation === 'adjacent') {
@@ -128,14 +128,14 @@ function resolveHit() {
   let explanation = '';
   let emoji = '';
   
-  if (v.throwAttack) {
-    hitType = 'HALF DAMAGE';
-    explanation = 'Throw attack - half damage';
-    emoji = '💫';
-  } else if (v.noBlock) {
+  if (v.noBlock) {
     hitType = 'FULL HIT';
-    explanation = 'No block attempted';
+    explanation = 'No block attempted - full damage';
     emoji = '🚫';
+  } else if (v.throwAttack) {
+    hitType = 'HALF DAMAGE';
+    explanation = 'Throw attack with block present - half damage';
+    emoji = '💫';
   } else if (v.zoneRelation === 'same') {
     hitType = 'BLOCKED';
     explanation = `Same zone (${v.attackZone}) - fully blocked`;
