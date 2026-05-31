@@ -429,3 +429,38 @@ document.addEventListener('DOMContentLoaded', () => {
   setupZoneCycling();
   initZoneSelectors(); // If you still have this, otherwise remove it
 });
+
+// Theme Toggle
+function toggleTheme() {
+  const body = document.body;
+  const toggleBtn = document.getElementById('themeToggle');
+  
+  if (body.classList.contains('light-mode')) {
+    body.classList.remove('light-mode');
+    toggleBtn.textContent = '🌙';
+    localStorage.setItem('theme', 'dark');
+  } else {
+    body.classList.add('light-mode');
+    toggleBtn.textContent = '☀️';
+    localStorage.setItem('theme', 'dark');
+    localStorage.setItem('theme', 'light');
+  }
+}
+
+// Load saved theme on startup
+function loadTheme() {
+  const savedTheme = localStorage.getItem('theme');
+  const toggleBtn = document.getElementById('themeToggle');
+  
+  if (savedTheme === 'light') {
+    document.body.classList.add('light-mode');
+    if (toggleBtn) toggleBtn.textContent = '☀️';
+  } else {
+    document.body.classList.remove('light-mode');
+    if (toggleBtn) toggleBtn.textContent = '🌙';
+  }
+}
+
+// Call loadTheme when page loads
+// Add this line to your initialization section or DOMContentLoaded event
+document.addEventListener('DOMContentLoaded', loadTheme);
