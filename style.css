@@ -205,26 +205,6 @@ body {
   text-transform: uppercase;
 }
 
-.field-group select,
-.field-group input[type="number"] {
-  background: #222;
-  border: 1px solid #333;
-  color: #fff;
-  border-radius: 8px;
-  padding: 8px;
-  font-size: 14px;
-  font-family: 'Barlow', sans-serif;
-  width: 100%;
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-.field-group select:focus,
-.field-group input[type="number"]:focus {
-  outline: none;
-  border-color: #c0282a;
-}
-
 /* Number Controls */
 .number-control {
   display: grid;
@@ -260,6 +240,19 @@ body {
   font-size: 16px;
   text-align: center;
   font-family: 'Barlow', sans-serif;
+  min-width: 0;
+  width: 100%;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 /* Throw and No Block rows */
@@ -367,6 +360,8 @@ body {
   min-height: 70px;
   display: flex;
   align-items: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .result-placeholder { color: #383838; }
@@ -490,36 +485,135 @@ body {
 .win-btn:active { filter: brightness(1.2); }
 
 /* ==================== */
-/* MOBILE RESPONSIVE FIXES */
+/* CYCLE ZONE SELECTOR STYLES */
 /* ==================== */
 
-/* Better number input visibility */
-.number-control input {
-  background: #222;
-  border: 1px solid #333;
-  color: #fff;
-  border-radius: 8px;
-  padding: 8px 4px;
-  font-size: 16px;
-  text-align: center;
-  font-family: 'Barlow', sans-serif;
-  min-width: 0;
+.zone-cycle-container {
   width: 100%;
 }
 
-/* Ensure number inputs show full value */
-input[type="number"] {
-  -moz-appearance: textfield;
-  appearance: textfield;
+.zone-cycle-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px;
+  background: #1a1a1a;
+  border: 2px solid #333;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+.zone-cycle-btn:active {
+  transform: scale(0.98);
 }
 
-/* Adjust font sizes for mobile */
+.attack-icon, .shield-icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.attack-svg, .shield-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.zone-label-text {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+/* Attack Icon Colors - High */
+.attack-icon[data-zone="High"] .arrow-high {
+  fill: #ff4444;
+}
+.attack-icon[data-zone="High"] .attack-circle {
+  stroke: #ff4444;
+}
+.attack-icon[data-zone="High"] .attack-svg circle:last-child {
+  fill: #ff4444;
+}
+
+/* Attack Icon Colors - Mid */
+.attack-icon[data-zone="Mid"] .arrow-mid {
+  fill: #ff8844;
+}
+.attack-icon[data-zone="Mid"] .attack-circle {
+  stroke: #ff8844;
+}
+.attack-icon[data-zone="Mid"] .attack-svg circle:last-child {
+  fill: #ff8844;
+}
+
+/* Attack Icon Colors - Low */
+.attack-icon[data-zone="Low"] .arrow-low {
+  fill: #ffdd44;
+}
+.attack-icon[data-zone="Low"] .attack-circle {
+  stroke: #ffdd44;
+}
+.attack-icon[data-zone="Low"] .attack-svg circle:last-child {
+  fill: #ffdd44;
+}
+
+.attack-icon .arrow {
+  transition: fill 0.1s ease;
+}
+
+/* Shield Icon Colors - High */
+.shield-icon[data-zone="High"] .shield-high {
+  fill: #ff4444;
+  opacity: 0.8;
+}
+.shield-icon[data-zone="High"] .shield-base {
+  stroke: #ff4444;
+}
+
+/* Shield Icon Colors - Mid */
+.shield-icon[data-zone="Mid"] .shield-mid {
+  fill: #ff8844;
+  opacity: 0.8;
+}
+.shield-icon[data-zone="Mid"] .shield-base {
+  stroke: #ff8844;
+}
+
+/* Shield Icon Colors - Low */
+.shield-icon[data-zone="Low"] .shield-low {
+  fill: #ffdd44;
+  opacity: 0.8;
+}
+.shield-icon[data-zone="Low"] .shield-base {
+  stroke: #ffdd44;
+}
+
+.shield-segment {
+  transition: fill 0.1s ease;
+}
+
+/* Text colors */
+.zone-cycle-btn[data-zone="High"] .zone-label-text {
+  color: #ff4444;
+}
+.zone-cycle-btn[data-zone="Mid"] .zone-label-text {
+  color: #ff8844;
+}
+.zone-cycle-btn[data-zone="Low"] .zone-label-text {
+  color: #ffdd44;
+}
+
+/* ==================== */
+/* MOBILE RESPONSIVE */
+/* ==================== */
+
 @media (max-width: 600px) {
   .app-root {
     padding: 8px;
@@ -537,12 +631,6 @@ input[type="number"]::-webkit-outer-spin-button {
   
   .panel {
     padding: 8px;
-  }
-  
-  .field-group select,
-  .field-group input[type="number"] {
-    padding: 6px;
-    font-size: 14px;
   }
   
   .num-btn {
@@ -609,9 +697,22 @@ input[type="number"]::-webkit-outer-spin-button {
   .sanity-label {
     font-size: 8px;
   }
+  
+  /* Zone cycle mobile */
+  .attack-icon, .shield-icon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .zone-label-text {
+    font-size: 16px;
+  }
+  
+  .zone-cycle-btn {
+    padding: 10px;
+  }
 }
 
-/* Even smaller phones */
 @media (max-width: 480px) {
   .players-row {
     gap: 4px;
@@ -640,12 +741,6 @@ input[type="number"]::-webkit-outer-spin-button {
   .num-btn {
     font-size: 16px;
     min-width: 28px;
-  }
-  
-  .field-group select,
-  .field-group input[type="number"] {
-    font-size: 13px;
-    padding: 5px;
   }
   
   .btn-hit-main {
@@ -682,9 +777,24 @@ input[type="number"]::-webkit-outer-spin-button {
   .sanity-value {
     font-size: 20px;
   }
+  
+  /* Zone cycle mobile small */
+  .attack-icon, .shield-icon {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .zone-label-text {
+    font-size: 14px;
+  }
+  
+  .zone-cycle-btn {
+    padding: 8px;
+    gap: 8px;
+  }
 }
 
-/* Landscape mode adjustments */
+/* Landscape mode */
 @media (max-width: 900px) and (orientation: landscape) {
   .app-root {
     max-width: 100%;
@@ -713,7 +823,7 @@ input[type="number"]::-webkit-outer-spin-button {
   }
 }
 
-/* Fix for notch/margin safe areas */
+/* Safe areas for notches */
 @supports (padding: max(0px)) {
   .app-root {
     padding-left: max(12px, env(safe-area-inset-left));
@@ -723,253 +833,22 @@ input[type="number"]::-webkit-outer-spin-button {
   }
 }
 
-/* Better tap targets for mobile */
+/* Better tap targets */
 button, 
 .num-btn,
 .hp-btn,
 .center-btn,
 .util-btn,
-.action-btn,
 .win-btn,
-select,
+.zone-cycle-btn,
 input[type="checkbox"] {
   touch-action: manipulation;
   cursor: pointer;
 }
 
-/* Improve readability of result on mobile */
-.result-panel {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
-
-.result-panel br {
-  display: block;
-  margin: 2px 0;
-}
-
-/* Better contrast for number inputs */
+/* Focus states */
 .number-control input:focus {
   outline: none;
   border-color: #c0282a;
   background: #2a2a2a;
-}
-
-/* Ensure zone dropdowns are readable on mobile */
-select option {
-  background: #222;
-  color: #fff;
-  padding: 8px;
-}
-
-/* ==================== */
-/* CYCLE ZONE SELECTOR STYLES */
-/* ==================== */
-
-.zone-cycle-container {
-  width: 100%;
-}
-
-.zone-cycle-btn {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 12px;
-  background: #1a1a1a;
-  border: 2px solid #333;
-  border-radius: 16px;
-  cursor: pointer;
-  transition: all 0.1s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.zone-cycle-btn:active {
-  transform: scale(0.98);
-}
-
-.attack-icon, .shield-icon {
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.attack-svg, .shield-svg {
-  width: 100%;
-  height: 100%;
-}
-
-.zone-label-text {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: 2px;
-}
-
-/* Attack Icon Colors - High */
-.attack-icon[data-zone="High"] .arrow-high {
-  fill: #ff4444;
-}
-
-.attack-icon[data-zone="High"] .attack-circle {
-  stroke: #ff4444;
-}
-
-/* Attack Icon Colors - Mid */
-.attack-icon[data-zone="Mid"] .arrow-mid {
-  fill: #ff8844;
-}
-
-.attack-icon[data-zone="Mid"] .attack-circle {
-  stroke: #ff8844;
-}
-
-/* Attack Icon Colors - Low */
-.attack-icon[data-zone="Low"] .arrow-low {
-  fill: #ffdd44;
-}
-
-.attack-icon[data-zone="Low"] .attack-circle {
-  stroke: #ffdd44;
-}
-
-/* Shield Icon Colors - High */
-.shield-icon[data-zone="High"] .shield-high {
-  fill: #ff4444;
-  opacity: 0.8;
-}
-
-.shield-icon[data-zone="High"] .shield-base {
-  stroke: #ff4444;
-}
-
-/* Shield Icon Colors - Mid */
-.shield-icon[data-zone="Mid"] .shield-mid {
-  fill: #ff8844;
-  opacity: 0.8;
-}
-
-.shield-icon[data-zone="Mid"] .shield-base {
-  stroke: #ff8844;
-}
-
-/* Shield Icon Colors - Low */
-.shield-icon[data-zone="Low"] .shield-low {
-  fill: #ffdd44;
-  opacity: 0.8;
-}
-
-.shield-icon[data-zone="Low"] .shield-base {
-  stroke: #ffdd44;
-}
-
-/* Text colors */
-.zone-cycle-btn[data-zone="High"] .zone-label-text {
-  color: #ff4444;
-}
-
-.zone-cycle-btn[data-zone="Mid"] .zone-label-text {
-  color: #ff8844;
-}
-
-.zone-cycle-btn[data-zone="Low"] .zone-label-text {
-  color: #ffdd44;
-}
-
-/* Mobile adjustments */
-@media (max-width: 600px) {
-  .attack-icon, .shield-icon {
-    width: 40px;
-    height: 40px;
-  }
-  
-  .zone-label-text {
-    font-size: 16px;
-  }
-  
-  .zone-cycle-btn {
-    padding: 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .attack-icon, .shield-icon {
-    width: 35px;
-    height: 35px;
-  }
-  
-  .zone-label-text {
-    font-size: 14px;
-  }
-  
-  .zone-cycle-btn {
-    padding: 8px;
-    gap: 8px;
-  }
-}
-
-
-
-
-/* ==================== */
-/* MOBILE RESPONSIVE */
-/* ==================== */
-
-@media (max-width: 600px) {
-  .zone-selector {
-    gap: 6px;
-  }
-  
-  .zone-option {
-    padding: 8px 2px;
-  }
-  
-  .zone-symbol {
-    font-size: 20px;
-  }
-  
-  .zone-name {
-    font-size: 9px;
-  }
-}
-
-@media (max-width: 480px) {
-  .zone-option {
-    padding: 6px 2px;
-  }
-  
-  .zone-symbol {
-    font-size: 18px;
-  }
-  
-  .zone-name {
-    font-size: 8px;
-  }
-}
-
-/* Landscape mode */
-@media (max-width: 900px) and (orientation: landscape) {
-  .zone-selector {
-    gap: 8px;
-  }
-  
-  .zone-option {
-    padding: 6px 2px;
-  }
-  
-  .zone-symbol {
-    font-size: 18px;
-  }
-  
-  .zone-name {
-    font-size: 8px;
-  }
-}
-
-/* Remove old select styles if they conflict */
-.field-group select {
-  display: none; /* Hide old select if still present */
 }
