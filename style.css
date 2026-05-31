@@ -205,43 +205,48 @@ body {
   text-transform: uppercase;
 }
 
-/* Number Controls */
-.number-control {
-  display: grid;
-  grid-template-columns: 32px 1fr 32px;
-  gap: 4px;
+/* Vertical Number Controls */
+.number-control-vertical {
+  display: flex;
+  gap: 8px;
   align-items: center;
 }
 
-.num-btn {
-  background: #2a2a2a;
-  border: 1px solid #3a3a3a;
-  color: #fff;
-  font-size: 20px;
-  font-weight: 700;
-  padding: 4px 0;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.1s;
-  font-family: 'Rajdhani', sans-serif;
-}
-
-.num-btn:active {
-  background: #c0282a;
-  transform: scale(0.95);
-}
-
-.number-control input {
+.number-control-vertical input {
+  flex: 1;
   background: #222;
   border: 1px solid #333;
   color: #fff;
   border-radius: 8px;
-  padding: 8px;
+  padding: 10px;
   font-size: 16px;
   text-align: center;
   font-family: 'Barlow', sans-serif;
-  min-width: 0;
-  width: 100%;
+}
+
+.vertical-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.num-btn-vertical {
+  background: #2a2a2a;
+  border: 1px solid #3a3a3a;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.1s;
+  font-family: 'Rajdhani', sans-serif;
+  min-width: 40px;
+}
+
+.num-btn-vertical:active {
+  background: #c0282a;
+  transform: scale(0.95);
 }
 
 input[type="number"] {
@@ -495,9 +500,10 @@ input[type="number"]::-webkit-outer-spin-button {
 .zone-cycle-btn {
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 8px;
   padding: 12px;
   background: #1a1a1a;
   border: 2px solid #333;
@@ -512,8 +518,8 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .attack-icon, .shield-icon {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -526,49 +532,36 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .zone-label-text {
   font-family: 'Rajdhani', sans-serif;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 2px;
 }
 
-/* Attack Icon Colors - High */
-.attack-icon[data-zone="High"] .arrow-high {
-  fill: #ff4444;
-}
-.attack-icon[data-zone="High"] .attack-circle {
-  stroke: #ff4444;
-}
-.attack-icon[data-zone="High"] .attack-svg circle:last-child {
+/* Attack Sword Colors - High */
+.attack-icon[data-zone="High"] .sword-blade,
+.attack-icon[data-zone="High"] .sword-hilt,
+.attack-icon[data-zone="High"] .sword-guard,
+.attack-icon[data-zone="High"] .sword-gem {
   fill: #ff4444;
 }
 
-/* Attack Icon Colors - Mid */
-.attack-icon[data-zone="Mid"] .arrow-mid {
-  fill: #ff8844;
-}
-.attack-icon[data-zone="Mid"] .attack-circle {
-  stroke: #ff8844;
-}
-.attack-icon[data-zone="Mid"] .attack-svg circle:last-child {
+/* Attack Sword Colors - Mid */
+.attack-icon[data-zone="Mid"] .sword-blade,
+.attack-icon[data-zone="Mid"] .sword-hilt,
+.attack-icon[data-zone="Mid"] .sword-guard,
+.attack-icon[data-zone="Mid"] .sword-gem {
   fill: #ff8844;
 }
 
-/* Attack Icon Colors - Low */
-.attack-icon[data-zone="Low"] .arrow-low {
-  fill: #ffdd44;
-}
-.attack-icon[data-zone="Low"] .attack-circle {
-  stroke: #ffdd44;
-}
-.attack-icon[data-zone="Low"] .attack-svg circle:last-child {
+/* Attack Sword Colors - Low */
+.attack-icon[data-zone="Low"] .sword-blade,
+.attack-icon[data-zone="Low"] .sword-hilt,
+.attack-icon[data-zone="Low"] .sword-guard,
+.attack-icon[data-zone="Low"] .sword-gem {
   fill: #ffdd44;
 }
 
-.attack-icon .arrow {
-  transition: fill 0.1s ease;
-}
-
-/* Shield Icon Colors - High */
+/* Shield Colors - High */
 .shield-icon[data-zone="High"] .shield-high {
   fill: #ff4444;
   opacity: 0.8;
@@ -577,7 +570,7 @@ input[type="number"]::-webkit-outer-spin-button {
   stroke: #ff4444;
 }
 
-/* Shield Icon Colors - Mid */
+/* Shield Colors - Mid */
 .shield-icon[data-zone="Mid"] .shield-mid {
   fill: #ff8844;
   opacity: 0.8;
@@ -586,17 +579,13 @@ input[type="number"]::-webkit-outer-spin-button {
   stroke: #ff8844;
 }
 
-/* Shield Icon Colors - Low */
+/* Shield Colors - Low */
 .shield-icon[data-zone="Low"] .shield-low {
   fill: #ffdd44;
   opacity: 0.8;
 }
 .shield-icon[data-zone="Low"] .shield-base {
   stroke: #ffdd44;
-}
-
-.shield-segment {
-  transition: fill 0.1s ease;
 }
 
 /* Text colors */
@@ -608,6 +597,44 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .zone-cycle-btn[data-zone="Low"] .zone-label-text {
   color: #ffdd44;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .attack-icon, .shield-icon {
+    width: 50px;
+    height: 50px;
+  }
+  .zone-label-text {
+    font-size: 12px;
+  }
+  .zone-cycle-btn {
+    padding: 10px;
+  }
+  .num-btn-vertical {
+    padding: 4px 10px;
+    min-width: 36px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .attack-icon, .shield-icon {
+    width: 45px;
+    height: 45px;
+  }
+  .zone-label-text {
+    font-size: 11px;
+  }
+  .zone-cycle-btn {
+    padding: 8px;
+    gap: 6px;
+  }
+  .num-btn-vertical {
+    padding: 3px 8px;
+    min-width: 32px;
+    font-size: 13px;
+  }
 }
 
 /* ==================== */
@@ -633,7 +660,7 @@ input[type="number"]::-webkit-outer-spin-button {
     padding: 8px;
   }
   
-  .num-btn {
+  .num-btn-vertical {
     font-size: 18px;
     padding: 2px 0;
     min-width: 28px;
