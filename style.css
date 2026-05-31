@@ -761,3 +761,169 @@ select option {
   color: #fff;
   padding: 8px;
 }
+
+/* ==================== */
+/* ZONE SELECTOR STYLES */
+/* ==================== */
+
+.zone-selector {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.zone-option {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 4px;
+  border-radius: 12px;
+  background: #1a1a1a;
+  border: 2px solid #333;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.zone-option:active {
+  transform: scale(0.96);
+}
+
+.zone-option.selected {
+  border-width: 3px;
+  box-shadow: 0 0 8px currentColor;
+}
+
+/* High Zone - Red */
+.zone-high {
+  --zone-color: #ff4444;
+}
+
+.zone-high.selected {
+  border-color: #ff4444;
+  background: rgba(255, 68, 68, 0.15);
+  box-shadow: 0 0 12px rgba(255, 68, 68, 0.4);
+}
+
+.zone-high .zone-symbol {
+  color: #ff4444;
+  text-shadow: 0 0 4px rgba(255, 68, 68, 0.5);
+}
+
+.zone-high .zone-name {
+  color: #ff8888;
+}
+
+/* Mid Zone - Orange */
+.zone-mid {
+  --zone-color: #ff8844;
+}
+
+.zone-mid.selected {
+  border-color: #ff8844;
+  background: rgba(255, 136, 68, 0.15);
+  box-shadow: 0 0 12px rgba(255, 136, 68, 0.4);
+}
+
+.zone-mid .zone-symbol {
+  color: #ff8844;
+  text-shadow: 0 0 4px rgba(255, 136, 68, 0.5);
+}
+
+.zone-mid .zone-name {
+  color: #ffaa66;
+}
+
+/* Low Zone - Yellow */
+.zone-low {
+  --zone-color: #ffdd44;
+}
+
+.zone-low.selected {
+  border-color: #ffdd44;
+  background: rgba(255, 221, 68, 0.15);
+  box-shadow: 0 0 12px rgba(255, 221, 68, 0.4);
+}
+
+.zone-low .zone-symbol {
+  color: #ffdd44;
+  text-shadow: 0 0 4px rgba(255, 221, 68, 0.5);
+}
+
+.zone-low .zone-name {
+  color: #ffee88;
+}
+
+/* Zone Symbols */
+.zone-symbol {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.zone-name {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* ==================== */
+/* MOBILE RESPONSIVE */
+/* ==================== */
+
+@media (max-width: 600px) {
+  .zone-selector {
+    gap: 6px;
+  }
+  
+  .zone-option {
+    padding: 8px 2px;
+  }
+  
+  .zone-symbol {
+    font-size: 20px;
+  }
+  
+  .zone-name {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 480px) {
+  .zone-option {
+    padding: 6px 2px;
+  }
+  
+  .zone-symbol {
+    font-size: 18px;
+  }
+  
+  .zone-name {
+    font-size: 8px;
+  }
+}
+
+/* Landscape mode */
+@media (max-width: 900px) and (orientation: landscape) {
+  .zone-selector {
+    gap: 8px;
+  }
+  
+  .zone-option {
+    padding: 6px 2px;
+  }
+  
+  .zone-symbol {
+    font-size: 18px;
+  }
+  
+  .zone-name {
+    font-size: 8px;
+  }
+}
+
+/* Remove old select styles if they conflict */
+.field-group select {
+  display: none; /* Hide old select if still present */
+}
