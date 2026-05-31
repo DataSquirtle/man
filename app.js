@@ -65,15 +65,25 @@ function updateSanityCheck() {
     requiredCheck += v.blockMod;
   }
   
+  // Update both displays
   const sanityEl = document.getElementById('sanityValue');
+  const requiredSpan = document.getElementById('requiredCheck');
+  const checkValueEl = document.getElementById('sanityCheckValue');
+  
   sanityEl.textContent = requiredCheck + '+';
+  requiredSpan.textContent = requiredCheck;
+  checkValueEl.textContent = requiredCheck;
   
   // Color code based on difficulty
   sanityEl.className = 'sanity-value';
   if (requiredCheck >= 10) {
     sanityEl.classList.add('high');
+    checkValueEl.style.color = '#ff4444';
   } else if (requiredCheck >= 7) {
     sanityEl.classList.add('medium');
+    checkValueEl.style.color = '#ffaa44';
+  } else {
+    checkValueEl.style.color = '#fff';
   }
 }
 
@@ -86,20 +96,6 @@ function updateZoneColors() {
                                    attackZone.value === 'Mid' ? '#ff8844' : '#ffdd44';
   blockZone.style.borderColor = blockZone.value === 'High' ? '#ff4444' : 
                                   blockZone.value === 'Mid' ? '#ff8844' : '#ffdd44';
-}
-
-function updateActionButtons() {
-  const noBlock = document.getElementById('noBlock').checked;
-  const blockBtn = document.querySelector('.btn-block');
-  const halfBtn = document.querySelector('.btn-half');
-  
-  if (noBlock) {
-    blockBtn.style.display = 'none';
-    halfBtn.style.display = 'none';
-  } else {
-    blockBtn.style.display = 'block';
-    halfBtn.style.display = 'block';
-  }
 }
 
 function applyDamage(dmg) {
@@ -129,78 +125,62 @@ function calculateFinalDamage(v) {
   }
 }
 
-function resolveBlock() {
-  const v = getValues();
-  const requiredCheck = v.cardPool + v.speed + (v.noBlock ? 0 : v.blockMod);
-  const zoneWarning = v.zoneRelation !== 'same' ? 
-    '<span class="result-warning">⚠ Zone ' + v.zoneRelation + '</span>' : '';
-  
-  document.getElementById('result').innerHTML =
-    '<span class="result-blocked">BLOCK CHECK</span>' +
-    ' — Need: <span class="result-check">' + requiredCheck + '+</span>' +
-    (zoneWarning ? ' ' + zoneWarning : '');
-}
-
-function resolveHalf() {
-  const v = getValues();
-  const half = Math.ceil(v.damage / 2);
-  applyDamage(half);
-  const defender = currentTurn === 1 ? 2 : 1;
-  
-  let reason = '';
-  if (v.throwAttack) reason = ' (Throw)';
-  else if (v.zoneRelation === 'adjacent') reason = ' (Adjacent zone)';
-  else reason = ' (Manual half)';
-  
-  document.getElementById('result').innerHTML =
-    '<span class="result-hit">HALF DAMAGE: ' + half + '</span>' +
-    ' dealt to Player ' + defender + reason;
-}
-
 function resolveHit() {
   const v = getValues();
   
   // Calculate final damage based on all rules
   const finalDamage = calculateFinalDamage(v);
+  const requiredCheck = v.cardPool + v.speed + (v.noBlock ? 0 : v.blockMod);
   const defender = currentTurn === 1 ? 2 : 1;
   
   // Build result message with explanation
   let hitType = '';
   let explanation = '';
+  let emoji = '';
   
   if (v.throwAttack) {
     hitType = 'HALF DAMAGE';
-    explanation = ' (Throw attack)';
+    explanation = 'Throw attack - half damage';
+    emoji = '💫';
   } else if (v.noBlock) {
     hitType = 'FULL HIT';
-    explanation = ' (No block)';
+    explanation = 'No block attempted';
+    emoji = '🚫';
   } else if (v.zoneRelation === 'same') {
     hitType = 'BLOCKED';
-    explanation = ' (Same zone - fully blocked)';
+    explanation = `Same zone (${v.attackZone}) - fully blocked`;
+    emoji = '🛡️';
   } else if (v.zoneRelation === 'adjacent') {
     hitType = 'HALF DAMAGE';
-    explanation = ' (Adjacent zone)';
+    explanation = `Adjacent zone (${v.attackZone} → ${v.blockZone}) - half damage`;
+    emoji = '⚠️';
   } else {
     hitType = 'FULL HIT';
-    explanation = ' (Opposite zone)';
+    explanation = `Opposite zone (${v.attackZone} → ${v.blockZone}) - full damage`;
+    emoji = '⚡';
   }
+  
+  // Show the check required
+  const checkInfo = !v.noBlock ? ` | Check needed: ${requiredCheck}+` : '';
   
   if (finalDamage > 0) {
     applyDamage(finalDamage);
     document.getElementById('result').innerHTML =
-      '<span class="result-hit">' + hitType + ': ' + finalDamage + ' damage</span>' +
-      ' dealt to Player ' + defender + explanation;
+      `<span class="result-hit">${emoji} ${hitType}: ${finalDamage} damage ${emoji}</span><br>` +
+      `<span style="font-size:12px;">→ ${explanation}${checkInfo}</span><br>` +
+      `<span style="font-size:12px;">→ ${finalDamage} damage dealt to Player ${defender}</span>`;
   } else {
     document.getElementById('result').innerHTML =
-      '<span class="result-blocked">' + hitType + '</span>' +
-      ' — Attack fully blocked' + explanation;
+      `<span class="result-blocked">🛡️ ${hitType} 🛡️</span><br>` +
+      `<span style="font-size:12px;">→ ${explanation}${checkInfo}</span><br>` +
+      `<span style="font-size:12px;">→ 0 damage dealt</span>`;
   }
 }
 
 function nextTurn() {
   currentTurn = currentTurn === 1 ? 2 : 1;
   document.getElementById('result').innerHTML =
-    '<span class="result-placeholder">— Set attack &amp; defense, then resolve —</span>';
+    '<span class="result-placeholder">— Set attack &amp; defense, then press HIT —</span>';
   updateHP();
   updateSanityCheck();
 }
@@ -211,7 +191,7 @@ function resetGame() {
   currentTurn = 1;
   document.getElementById('winOverlay').style.display = 'none';
   document.getElementById('result').innerHTML =
-    '<span class="result-placeholder">— Set attack &amp; defense, then resolve —</span>';
+    '<span class="result-placeholder">— Set attack &amp; defense, then press HIT —</span>';
   document.getElementById('diceResult').textContent = '—';
   document.getElementById('cardPool').value = 0;
   document.getElementById('speed').value = 4;
@@ -221,7 +201,6 @@ function resetGame() {
   document.getElementById('throw').checked = false;
   updateSanityCheck();
   updateHP();
-  updateActionButtons();
 }
 
 function rollDice() {
@@ -273,7 +252,6 @@ function adjustBlockMod(amount) {
 updateHP();
 updateSanityCheck();
 updateZoneColors();
-updateActionButtons();
 
 // Add event listeners for real-time updates
 document.getElementById('attackZone').addEventListener('change', updateZoneColors);
@@ -282,3 +260,4 @@ document.getElementById('speed').addEventListener('input', updateSanityCheck);
 document.getElementById('blockMod').addEventListener('input', updateSanityCheck);
 document.getElementById('cardPool').addEventListener('input', updateSanityCheck);
 document.getElementById('noBlock').addEventListener('change', updateSanityCheck);
+document.getElementById('throw').addEventListener('change', updateSanityCheck);
