@@ -763,110 +763,156 @@ select option {
 }
 
 /* ==================== */
-/* ZONE SELECTOR STYLES */
+/* CYCLE ZONE SELECTOR STYLES */
 /* ==================== */
 
-.zone-selector {
-  display: flex;
-  gap: 8px;
-  margin-top: 4px;
+.zone-cycle-container {
+  width: 100%;
 }
 
-.zone-option {
-  flex: 1;
+.zone-cycle-btn {
+  width: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 4px;
-  padding: 10px 4px;
-  border-radius: 12px;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px;
   background: #1a1a1a;
   border: 2px solid #333;
+  border-radius: 16px;
   cursor: pointer;
   transition: all 0.1s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
-.zone-option:active {
-  transform: scale(0.96);
+.zone-cycle-btn:active {
+  transform: scale(0.98);
 }
 
-.zone-option.selected {
-  border-width: 3px;
-  box-shadow: 0 0 8px currentColor;
+.attack-icon, .shield-icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* High Zone - Red */
-.zone-high {
-  --zone-color: #ff4444;
+.attack-svg, .shield-svg {
+  width: 100%;
+  height: 100%;
 }
 
-.zone-high.selected {
-  border-color: #ff4444;
-  background: rgba(255, 68, 68, 0.15);
-  box-shadow: 0 0 12px rgba(255, 68, 68, 0.4);
-}
-
-.zone-high .zone-symbol {
-  color: #ff4444;
-  text-shadow: 0 0 4px rgba(255, 68, 68, 0.5);
-}
-
-.zone-high .zone-name {
-  color: #ff8888;
-}
-
-/* Mid Zone - Orange */
-.zone-mid {
-  --zone-color: #ff8844;
-}
-
-.zone-mid.selected {
-  border-color: #ff8844;
-  background: rgba(255, 136, 68, 0.15);
-  box-shadow: 0 0 12px rgba(255, 136, 68, 0.4);
-}
-
-.zone-mid .zone-symbol {
-  color: #ff8844;
-  text-shadow: 0 0 4px rgba(255, 136, 68, 0.5);
-}
-
-.zone-mid .zone-name {
-  color: #ffaa66;
-}
-
-/* Low Zone - Yellow */
-.zone-low {
-  --zone-color: #ffdd44;
-}
-
-.zone-low.selected {
-  border-color: #ffdd44;
-  background: rgba(255, 221, 68, 0.15);
-  box-shadow: 0 0 12px rgba(255, 221, 68, 0.4);
-}
-
-.zone-low .zone-symbol {
-  color: #ffdd44;
-  text-shadow: 0 0 4px rgba(255, 221, 68, 0.5);
-}
-
-.zone-low .zone-name {
-  color: #ffee88;
-}
-
-/* Zone Symbols */
-.zone-symbol {
-  font-size: 24px;
+.zone-label-text {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 18px;
   font-weight: 700;
+  letter-spacing: 2px;
 }
 
-.zone-name {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 1px;
+/* Attack Icon Colors - High */
+.attack-icon[data-zone="High"] .arrow-high {
+  fill: #ff4444;
 }
+
+.attack-icon[data-zone="High"] .attack-circle {
+  stroke: #ff4444;
+}
+
+/* Attack Icon Colors - Mid */
+.attack-icon[data-zone="Mid"] .arrow-mid {
+  fill: #ff8844;
+}
+
+.attack-icon[data-zone="Mid"] .attack-circle {
+  stroke: #ff8844;
+}
+
+/* Attack Icon Colors - Low */
+.attack-icon[data-zone="Low"] .arrow-low {
+  fill: #ffdd44;
+}
+
+.attack-icon[data-zone="Low"] .attack-circle {
+  stroke: #ffdd44;
+}
+
+/* Shield Icon Colors - High */
+.shield-icon[data-zone="High"] .shield-high {
+  fill: #ff4444;
+  opacity: 0.8;
+}
+
+.shield-icon[data-zone="High"] .shield-base {
+  stroke: #ff4444;
+}
+
+/* Shield Icon Colors - Mid */
+.shield-icon[data-zone="Mid"] .shield-mid {
+  fill: #ff8844;
+  opacity: 0.8;
+}
+
+.shield-icon[data-zone="Mid"] .shield-base {
+  stroke: #ff8844;
+}
+
+/* Shield Icon Colors - Low */
+.shield-icon[data-zone="Low"] .shield-low {
+  fill: #ffdd44;
+  opacity: 0.8;
+}
+
+.shield-icon[data-zone="Low"] .shield-base {
+  stroke: #ffdd44;
+}
+
+/* Text colors */
+.zone-cycle-btn[data-zone="High"] .zone-label-text {
+  color: #ff4444;
+}
+
+.zone-cycle-btn[data-zone="Mid"] .zone-label-text {
+  color: #ff8844;
+}
+
+.zone-cycle-btn[data-zone="Low"] .zone-label-text {
+  color: #ffdd44;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .attack-icon, .shield-icon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .zone-label-text {
+    font-size: 16px;
+  }
+  
+  .zone-cycle-btn {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .attack-icon, .shield-icon {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .zone-label-text {
+    font-size: 14px;
+  }
+  
+  .zone-cycle-btn {
+    padding: 8px;
+    gap: 8px;
+  }
+}
+
+
+
 
 /* ==================== */
 /* MOBILE RESPONSIVE */
