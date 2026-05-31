@@ -3,11 +3,15 @@ let p1HP = 30;
 let p2HP = 30;
 
 // Zone adjacency mapping
-const zoneAdjacency = {
-  'High': { adjacent: 'Mid', opposite: 'Low' },
-  'Mid': { adjacent: ['High', 'Low'], opposite: null },
-  'Low': { adjacent: 'Mid', opposite: 'High' }
-};
+function getZoneRelation(attackZone, blockZone) {
+  if (attackZone === blockZone) return 'same';
+  
+  if (attackZone === 'High' && blockZone === 'Mid') return 'adjacent';
+  if (attackZone === 'Mid' && (blockZone === 'High' || blockZone === 'Low')) return 'adjacent';
+  if (attackZone === 'Low' && blockZone === 'Mid') return 'adjacent';
+  
+  return 'opposite';
+}
 
 function updateHP() {
   const p1El = document.getElementById('p1hp');
@@ -45,19 +49,13 @@ function getValues() {
   const damage = parseInt(document.getElementById('damage').value) || 0;
   const blockMod = parseInt(document.getElementById('blockMod').value) || 0;
   const noBlock = document.getElementById('noBlock').checked;
+  const throwAttack = document.getElementById('throw').checked;
   const attackZone = document.getElementById('attackZone').value;
   const blockZone = document.getElementById('blockZone').value;
   
-  // Determine zone relationship
-  let zoneRelation = 'same';
-  if (attackZone !== blockZone) {
-    if (attackZone === 'High' && blockZone === 'Mid') zoneRelation = 'adjacent';
-    else if (attackZone === 'Mid' && (blockZone === 'High' || blockZone === 'Low')) zoneRelation = 'adjacent';
-    else if (attackZone === 'Low' && blockZone === 'Mid') zoneRelation = 'adjacent';
-    else zoneRelation = 'opposite';
-  }
+  const zoneRelation = getZoneRelation(attackZone, blockZone);
   
-  return { cardPool, speed, damage, blockMod, noBlock, attackZone, blockZone, zoneRelation };
+  return { cardPool, speed, damage, blockMod, noBlock, throwAttack, attackZone, blockZone, zoneRelation };
 }
 
 function updateSanityCheck() {
@@ -90,16 +88,45 @@ function updateZoneColors() {
                                   blockZone.value === 'Mid' ? '#ff8844' : '#ffdd44';
 }
 
+function updateActionButtons() {
+  const noBlock = document.getElementById('noBlock').checked;
+  const blockBtn = document.querySelector('.btn-block');
+  const halfBtn = document.querySelector('.btn-half');
+  
+  if (noBlock) {
+    blockBtn.style.display = 'none';
+    halfBtn.style.display = 'none';
+  } else {
+    blockBtn.style.display = 'block';
+    halfBtn.style.display = 'block';
+  }
+}
+
 function applyDamage(dmg) {
   if (currentTurn === 1) p2HP = Math.max(0, p2HP - dmg);
   else p1HP = Math.max(0, p1HP - dmg);
   updateHP();
 }
 
-function calculateDamageWithAdjacency(baseDamage, zoneRelation) {
-  if (zoneRelation === 'same') return 0;
-  if (zoneRelation === 'adjacent') return Math.ceil(baseDamage / 2);
-  return baseDamage; // opposite
+function calculateFinalDamage(v) {
+  // Throw overrides everything - always half damage (rounded up)
+  if (v.throwAttack) {
+    return Math.ceil(v.damage / 2);
+  }
+  
+  // No block = full damage
+  if (v.noBlock) {
+    return v.damage;
+  }
+  
+  // Normal block rules based on zone
+  if (v.zoneRelation === 'same') {
+    return 0; // Fully blocked
+  } else if (v.zoneRelation === 'adjacent') {
+    return Math.ceil(v.damage / 2); // Half damage
+  } else {
+    return v.damage; // Opposite zone = full damage
+  }
 }
 
 function resolveBlock() {
@@ -109,8 +136,8 @@ function resolveBlock() {
     '<span class="result-warning">⚠ Zone ' + v.zoneRelation + '</span>' : '';
   
   document.getElementById('result').innerHTML =
-    '<span class="result-blocked">BLOCKED</span>' +
-    ' — Check needed: <span class="result-check">' + requiredCheck + '+</span>' +
+    '<span class="result-blocked">BLOCK CHECK</span>' +
+    ' — Need: <span class="result-check">' + requiredCheck + '+</span>' +
     (zoneWarning ? ' ' + zoneWarning : '');
 }
 
@@ -120,46 +147,53 @@ function resolveHalf() {
   applyDamage(half);
   const defender = currentTurn === 1 ? 2 : 1;
   
-  const zoneText = v.zoneRelation !== 'same' ? ` (${v.zoneRelation} zone)` : '';
+  let reason = '';
+  if (v.throwAttack) reason = ' (Throw)';
+  else if (v.zoneRelation === 'adjacent') reason = ' (Adjacent zone)';
+  else reason = ' (Manual half)';
+  
   document.getElementById('result').innerHTML =
     '<span class="result-hit">HALF DAMAGE: ' + half + '</span>' +
-    ' dealt to Player ' + defender + zoneText;
+    ' dealt to Player ' + defender + reason;
 }
 
 function resolveHit() {
   const v = getValues();
   
-  // Auto-detect damage based on zone adjacency
-  let finalDamage;
-  let hitType;
+  // Calculate final damage based on all rules
+  const finalDamage = calculateFinalDamage(v);
+  const defender = currentTurn === 1 ? 2 : 1;
   
-  if (v.zoneRelation === 'same') {
-    finalDamage = 0;
-    hitType = 'BLOCKED';
-  } else if (v.zoneRelation === 'adjacent') {
-    finalDamage = Math.ceil(v.damage / 2);
+  // Build result message with explanation
+  let hitType = '';
+  let explanation = '';
+  
+  if (v.throwAttack) {
     hitType = 'HALF DAMAGE';
-  } else {
-    finalDamage = v.damage;
+    explanation = ' (Throw attack)';
+  } else if (v.noBlock) {
     hitType = 'FULL HIT';
+    explanation = ' (No block)';
+  } else if (v.zoneRelation === 'same') {
+    hitType = 'BLOCKED';
+    explanation = ' (Same zone - fully blocked)';
+  } else if (v.zoneRelation === 'adjacent') {
+    hitType = 'HALF DAMAGE';
+    explanation = ' (Adjacent zone)';
+  } else {
+    hitType = 'FULL HIT';
+    explanation = ' (Opposite zone)';
   }
   
   if (finalDamage > 0) {
     applyDamage(finalDamage);
-  }
-  
-  const defender = currentTurn === 1 ? 2 : 1;
-  const zoneDesc = v.zoneRelation === 'same' ? ' (same zone - blocked)' :
-                   v.zoneRelation === 'adjacent' ? ' (adjacent zone)' : ' (opposite zone)';
-  
-  if (finalDamage === 0) {
-    document.getElementById('result').innerHTML =
-      '<span class="result-blocked">BLOCKED</span>' +
-      ' — Attack fully blocked' + zoneDesc;
-  } else {
     document.getElementById('result').innerHTML =
       '<span class="result-hit">' + hitType + ': ' + finalDamage + ' damage</span>' +
-      ' dealt to Player ' + defender + zoneDesc;
+      ' dealt to Player ' + defender + explanation;
+  } else {
+    document.getElementById('result').innerHTML =
+      '<span class="result-blocked">' + hitType + '</span>' +
+      ' — Attack fully blocked' + explanation;
   }
 }
 
@@ -184,8 +218,10 @@ function resetGame() {
   document.getElementById('damage').value = 4;
   document.getElementById('blockMod').value = 0;
   document.getElementById('noBlock').checked = false;
+  document.getElementById('throw').checked = false;
   updateSanityCheck();
   updateHP();
+  updateActionButtons();
 }
 
 function rollDice() {
@@ -237,6 +273,7 @@ function adjustBlockMod(amount) {
 updateHP();
 updateSanityCheck();
 updateZoneColors();
+updateActionButtons();
 
 // Add event listeners for real-time updates
 document.getElementById('attackZone').addEventListener('change', updateZoneColors);
