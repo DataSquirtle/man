@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <title>UVS Combat Calc - Enhanced</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#111111">
@@ -51,10 +51,12 @@
   <div class="sanity-section">
     <div class="card-pool-group">
       <div class="field-label">Cards in Pool</div>
-      <div class="number-control">
-        <button class="num-btn" onclick="adjustCardPool(-1)">−</button>
+      <div class="number-control-vertical">
         <input type="number" id="cardPool" value="0" min="0" max="10" onchange="updateSanityCheck()">
-        <button class="num-btn" onclick="adjustCardPool(1)">+</button>
+        <div class="vertical-buttons">
+          <button class="num-btn-vertical" onclick="adjustCardPool(1)">+</button>
+          <button class="num-btn-vertical" onclick="adjustCardPool(-1)">−</button>
+        </div>
       </div>
     </div>
     <div class="sanity-card" id="sanityCard">
@@ -63,31 +65,24 @@
     </div>
   </div>
 
-<!-- ATTACK & DEFENSE -->
-<div class="combat-section">
-  <div class="panel">
-    <div class="panel-title">Attack</div>
-    <div class="row-inputs">
+  <!-- ATTACK & DEFENSE -->
+  <div class="combat-section">
+    <div class="panel">
+      <div class="panel-title">Attack</div>
       <div class="field-group">
         <div class="field-label">Zone</div>
         <div class="zone-cycle-container">
           <button class="zone-cycle-btn" id="attackCycleBtn">
             <div class="attack-icon" id="attackIcon">
               <svg class="attack-svg" viewBox="0 0 100 100">
-                <!-- Outer circle -->
-                <circle class="attack-circle" cx="50" cy="50" r="42" fill="none" stroke="#555" stroke-width="3"/>
-                
-                <!-- Arrow 1 (steepest angle) - High zone -->
-                <polygon class="arrow-high arrow" points="50,50 38,28 44,32 50,22 56,32 62,28" fill="#555"/>
-                
-                <!-- Arrow 2 (middle angle) - Mid zone -->
-                <polygon class="arrow-mid arrow" points="50,50 30,32 38,36 50,20 62,36 70,32" fill="#555"/>
-                
-                <!-- Arrow 3 (shallowest angle) - Low zone -->
-                <polygon class="arrow-low arrow" points="50,50 28,42 36,44 50,28 64,44 72,42" fill="#555"/>
-                
-                <!-- Center core -->
-                <circle cx="50" cy="50" r="6" fill="#555"/>
+                <!-- Sword blade -->
+                <polygon class="sword-blade" points="50,10 45,45 50,50 55,45" fill="#555"/>
+                <!-- Sword hilt -->
+                <rect class="sword-hilt" x="47" y="50" width="6" height="20" fill="#555"/>
+                <!-- Sword guard -->
+                <rect class="sword-guard" x="40" y="48" width="20" height="4" fill="#555"/>
+                <!-- Sword gem -->
+                <circle class="sword-gem" cx="50" cy="55" r="3" fill="#555"/>
               </svg>
             </div>
             <span class="zone-label-text" id="attackZoneText">HIGH</span>
@@ -95,32 +90,34 @@
           <input type="hidden" id="attackZone" value="High">
         </div>
       </div>
-      <div class="field-group">
+      <div class="field-group" style="margin-top:8px;">
         <div class="field-label">Speed</div>
-        <div class="number-control">
-          <button class="num-btn" onclick="adjustSpeed(-1)">−</button>
+        <div class="number-control-vertical">
           <input type="number" id="speed" value="4" min="0" onchange="updateSanityCheck()">
-          <button class="num-btn" onclick="adjustSpeed(1)">+</button>
+          <div class="vertical-buttons">
+            <button class="num-btn-vertical" onclick="adjustSpeed(1)">+</button>
+            <button class="num-btn-vertical" onclick="adjustSpeed(-1)">−</button>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="field-group" style="margin-top:6px;">
-      <div class="field-label">Damage</div>
-      <div class="number-control">
-        <button class="num-btn" onclick="adjustDamage(-1)">−</button>
-        <input type="number" id="damage" value="4" min="0">
-        <button class="num-btn" onclick="adjustDamage(1)">+</button>
+      <div class="field-group" style="margin-top:8px;">
+        <div class="field-label">Damage</div>
+        <div class="number-control-vertical">
+          <input type="number" id="damage" value="4" min="0">
+          <div class="vertical-buttons">
+            <button class="num-btn-vertical" onclick="adjustDamage(1)">+</button>
+            <button class="num-btn-vertical" onclick="adjustDamage(-1)">−</button>
+          </div>
+        </div>
+      </div>
+      <div class="throw-row">
+        <input type="checkbox" id="throw" onchange="updateSanityCheck()">
+        <label for="throw">💫 Throw (Attacking Side)</label>
       </div>
     </div>
-    <div class="throw-row">
-      <input type="checkbox" id="throw" onchange="updateSanityCheck()">
-      <label for="throw">💫 Throw (Attacking Side)</label>
-    </div>
-  </div>
 
-  <div class="panel">
-    <div class="panel-title">Defense</div>
-    <div class="row-inputs">
+    <div class="panel">
+      <div class="panel-title">Defense</div>
       <div class="field-group">
         <div class="field-label">Block Zone</div>
         <div class="zone-cycle-container">
@@ -129,13 +126,10 @@
               <svg class="shield-svg" viewBox="0 0 100 100">
                 <!-- Shield base outline -->
                 <path class="shield-base" d="M50,5 L50,5 C50,5 15,15 15,35 C15,65 50,95 50,95 C50,95 85,65 85,35 C85,15 50,5 50,5 Z" fill="none" stroke="#555" stroke-width="3"/>
-                
                 <!-- Top segment (High block) -->
                 <path class="shield-segment shield-high" d="M50,10 L50,35 L50,35 L22,30 C22,22 50,10 50,10 Z" fill="#555" opacity="0.3"/>
-                
                 <!-- Mid segment -->
                 <path class="shield-segment shield-mid" d="M50,38 L50,60 L50,60 L20,50 C20,40 50,38 50,38 Z" fill="#555" opacity="0.3"/>
-                
                 <!-- Bottom segment (Low block) -->
                 <path class="shield-segment shield-low" d="M50,65 L50,88 L50,88 C50,88 25,75 25,65 C25,60 30,55 30,55 L50,65 Z" fill="#555" opacity="0.3"/>
               </svg>
@@ -145,21 +139,23 @@
           <input type="hidden" id="blockZone" value="High">
         </div>
       </div>
-      <div class="field-group">
+      <div class="field-group" style="margin-top:8px;">
         <div class="field-label">Block Mod</div>
-        <div class="number-control">
-          <button class="num-btn" onclick="adjustBlockMod(-1)">−</button>
+        <div class="number-control-vertical">
           <input type="number" id="blockMod" value="0" onchange="updateSanityCheck()">
-          <button class="num-btn" onclick="adjustBlockMod(1)">+</button>
+          <div class="vertical-buttons">
+            <button class="num-btn-vertical" onclick="adjustBlockMod(1)">+</button>
+            <button class="num-btn-vertical" onclick="adjustBlockMod(-1)">−</button>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="no-block-row">
-      <input type="checkbox" id="noBlock" onchange="updateSanityCheck()">
-      <label for="noBlock">🚫 No Block</label>
+      <div class="no-block-row">
+        <input type="checkbox" id="noBlock" onchange="updateSanityCheck()">
+        <label for="noBlock">🚫 No Block</label>
+      </div>
     </div>
   </div>
-</div>
+
   <!-- RESULT -->
   <div class="result-panel" id="result">
     <span class="result-placeholder">— Set attack & defense, then press HIT —</span>
@@ -193,3 +189,4 @@
 </script>
 </body>
 </html>
+
